@@ -1,0 +1,16 @@
+.spacer {
+	margin-top: 20px;
+}
+
+.table-hover > tbody > tr:hover > td {
+  background-color: #428BCA;
+  color: #ffffff;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+#marks_table {
+	width: 15%;
+}
