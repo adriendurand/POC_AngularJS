@@ -1,5 +1,5 @@
 # POC AngularJS
 
-Many short example to discover AngularJS
+Many short examples to discover AngularJS
 
 CSS By Boostrap

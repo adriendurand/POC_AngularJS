@@ -19,6 +19,12 @@ mainApp.controller('studentController', function($scope) {
 			$scope.firstNames = "Mahesh";
 			$scope.lastNames = "Parashar";
 			$scope.emails = "MaheshParashar@tutorialspoint.com";
+		},
+		getStudents: function() {
+			var url="../assets/data.json";
+			$http.get(url).success( function(response) {
+				$scope.obj = response;
+			});
 		}
 	};
 });

@@ -59,6 +59,12 @@
 
 			<button ng-click="student.reset()">Reset</button>
 			<button	ng-disabled="studentForm.firstnames.$dirty && studentForm.firstnames.$invalid || studentForm.lastnames.$dirty && studentForm.lastnames.$invalid || studentForm.emails.$dirty && studentForm.emails.$invalid" ng-click="submit()">Submit</button>
+
+			<ul>
+				<li ng-repeat="stu in obj()">
+					{{ stu.name }}
+				</li>
+			</ul>
 		</form>
 	</div>
 </div>
