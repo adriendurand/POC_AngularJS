@@ -1,10 +1,5 @@
 # POC AngularJS
 
-## Installation
+Many short example to discover AngularJS
 
-## Configuration
-
-## Use
-
-
-## Example
+CSS By Boostrap

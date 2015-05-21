@@ -8,21 +8,26 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
 
+	<script src="scripts/mainApp.js"></script>
+	<script src="scripts/studentController.js"></script>
+
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="styles/style.css"/>
 	
 	<title>POC AngularJS</title>
 </head>
-<body>
-	<div ng-app="mainApp" ng-controller="studentController" >
+<body ng-app="mainApp">
+	<div ng-controller="studentController" >
 		Enter first name: <input type="text" ng-model="student.firstName"><br><br>
 		Enter last name: <input type="text" ng-model="student.lastName"><br><br>
 		(LOWER) {{student.fullName() | lowercase}}<br><br>
 		(UPPER) {{student.fullName() | uppercase}}<br><br>
 		How many fees ?: <input type="text" ng-model="student.fees"><br><br>
 		Fees: {{student.fees}} ==> {{student.fees | currency}}<br><br>
-		Enter subject: <input type="text" ng-model="subjectName"><br><br>
+		<input type="checkbox" ng-model="enableDisableSearch">Disable Search<br><br>
+		<input type="checkbox" ng-model="showHideSearch">Hide Search<br><br>
+		Enter subject: <input type="text" ng-model="subjectName" ng-disabled="enableDisableSearch" ng-hide="showHideSearch"><br><br>
 		Subject:<br><br>
 		
 		<table class="table table-striped table-hover spacer" id="marks_table">
@@ -30,36 +35,32 @@
 				<th>Name</th>
 				<th>Marks</th>
 			</tr>
-			<tr ng-repeat="subject in student.subjects" class="clickable">
+			<tr ng-repeat="subject in student.subjects | filter: subjectName" class="clickable">
 				<td>{{ subject.name }}</td>
 				<td>{{ subject.marks }}</td>
 			</tr>
 		</table>
+		<form name="studentForm" novalidate>
+			Firstnames<input name="firstnames" type="text" ng-model="firstNames" required>
+			<span style="color:red" ng-show="studentForm.firstnames.$dirty && studentForm.firstnames.$invalid">
+				<span ng-show="studentForm.firstnames.$error.required">First Name is required.</span>
+			</span>
 
+			<input name="lastnames" type="text" ng-model="lastNames" required>
+			<span style="color:red" ng-show="studentForm.lastnames.$dirty && studentForm.lastnames.$invalid">
+				<span ng-show="studentForm.lastnames.$error.required">Last Name is required.</span>
+			</span>
+
+			<input name="emails" type="email" ng-model="emails" required>
+			<span style="color:red" ng-show="studentForm.emails.$dirty && studentForm.emails.$invalid">
+				<span ng-show="studentForm.emails.$error.required">Email is required.</span>
+				<span ng-show="studentForm.emails.$error.email">Invalid email address.</span>
+			</span>
+
+			<button ng-click="student.reset()">Reset</button>
+			<button	ng-disabled="studentForm.firstnames.$dirty && studentForm.firstnames.$invalid || studentForm.lastnames.$dirty && studentForm.lastnames.$invalid || studentForm.emails.$dirty && studentForm.emails.$invalid" ng-click="submit()">Submit</button>
+		</form>
 	</div>
-	<script>
-		var mainApp = angular.module("mainApp", []);
-
-		mainApp.controller('studentController', function($scope) {
-			$scope.student = {
-				firstName: "Adrien",
-				lastName: "DURAND",
-				fees:10000,
-				subjects:[
-				{name:'Physics',marks:13},
-				{name:'Chemistry',marks:16},
-				{name:'Cheval',marks:18},
-				{name:'Math',marks:5},
-				{name:'English',marks:17}
-				],
-				fullName: function() {
-					var studentObject;
-					studentObject = $scope.student;
-					return studentObject.firstName + " " + studentObject.lastName;
-				}
-			};
-		});
-	</script>
 </div>
 </body>
 </html>
